@@ -3,7 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import { connectDB } from "./DB/db.js";
 import { verifyToken } from "./middlewares/verifyToken.js";
-import { changeUserRoleController, getAllUsersController, getUserFavoritesController, loginUserController, registerUserController } from "./controllers/userController.js";
+import { changeUserRoleController, getAllUsersController, getMeController, getUserFavoritesController, loginUserController, registerUserController } from "./controllers/userController.js";
 import { addRecipeController, addToFavoriteController, deleteRecipeController, getAllRecipesController, getRecipeByIdController, getRecipeCommentsController, getRecipeRatingController, rateRecipeController, removeFromFavoriteController, updateRecipeController } from "./controllers/recipeController.js";
 import { requireAdmin } from "./middlewares/requireAdmin.js";
 import { addCommentController } from "./controllers/commentController.js";
@@ -25,6 +25,8 @@ app.post("/api/users/login", loginUserController);
 app.get("/api/users/favorites", verifyToken, getUserFavoritesController);
 
 app.get("/api/users", verifyToken, requireAdmin, getAllUsersController);
+
+app.get("/api/users/me", verifyToken, getMeController);
 
 app.patch("/api/users/role/:id", verifyToken, requireAdmin, changeUserRoleController);
 

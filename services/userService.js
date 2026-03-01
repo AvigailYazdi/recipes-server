@@ -55,11 +55,19 @@ export const getAllUsersService = async () => {
     return users;
 }
 
+export const getMeService = async (userId) => {
+    const user = await User.findById(userId);
+    if(!user){
+        throw new Error("Usr not found");
+    }
+    return user;
+}
+
 export const changeUserRoleService = async (userId, role) => {
-    if(role !== "admin" && role !== "user"){
+    if (role !== "admin" && role !== "user") {
         throw new Error("Invalid role")
     }
-    const user = await User.findOneAndUpdate({ _id: userId }, {role}, { new: true, runValidators: true }).select("name email role");
+    const user = await User.findOneAndUpdate({ _id: userId }, { role }, { new: true, runValidators: true }).select("name email role");
     if (!user) {
         throw new Error("User not found");
     }

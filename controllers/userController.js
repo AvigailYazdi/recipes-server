@@ -1,4 +1,4 @@
-import { changeUserRoleService, getAllUsersService, getUserFavoritesService, loginUserService, registerUserService } from "../services/userService.js";
+import { changeUserRoleService, getAllUsersService, getMeService, getUserFavoritesService, loginUserService, registerUserService } from "../services/userService.js";
 
 export const registerUserController = async (req, res) => {
     try {
@@ -40,12 +40,22 @@ export const getAllUsersController = async (req, res) => {
     }
 }
 
-export const changeUserRoleController = async (req,res)=>{
-    try{
+export const getMeController = async (req, res) => {
+    try {
+        const user = await getMeService(req.user.sub);
+        res.status(200).json(user);
+    }
+    catch (e) {
+        res.status(400).json({ message: "Error in getting user", error: e.message });
+    }
+}
+
+export const changeUserRoleController = async (req, res) => {
+    try {
         const newUser = await changeUserRoleService(req.params.id, req.body.role);
         res.status(200).json(newUser);
     }
-    catch(e){
+    catch (e) {
         res.status(400).json({ message: "Error in changing user's role", error: e.message })
     }
 }
