@@ -24,22 +24,32 @@ const recipeSchema = new mongoose.Schema({
     servings: Number,
     ingredients: {
         type: [{
-            name: { type: String, required: true },
-            amount: Number,
-            unit: String
+            title: String,
+            items: [{
+                name: { type: String, required: true },
+                amount: String,
+                unit: String
+            }]
         }],
         required: true,
         validate: {
-            validator: (arr) => arr.length > 0,
-            message: "Recipe must have at least one ingredient"
+            validator: (arr) =>
+                arr.length > 0 &&
+                arr.every(section => Array.isArray(section.items) && section.items.length > 0),
+            message: "Recipe must have at least one ingredient section with at least one item"
         }
     },
     steps: {
-        type: [String],
+        type: [{
+            title: String,
+            items: [{ type: String, required: true }]
+        }],
         required: true,
         validate: {
-            validator: (arr) => arr.length > 0,
-            message: "Recipe must have at least one step"
+            validator: (arr) =>
+                arr.length > 0 &&
+                arr.every(section => Array.isArray(section.items) && section.items.length > 0),
+            message: "Recipe must have at least one step section with at least one step"
         }
     },
     tags: [String],
