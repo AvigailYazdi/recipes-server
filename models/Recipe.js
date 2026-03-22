@@ -68,7 +68,7 @@ const recipeSchema = new mongoose.Schema(
       },
     },
     tags: [String],
-    status: { type: String, enum: ["published", "draft"], default: "draft" },
+    status: { type: String, enum: ["פורסם", "טיוטה"], default: "טיוטה" },
   },
   { timestamps: true },
 );
