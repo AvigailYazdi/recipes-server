@@ -15,7 +15,7 @@ export const getAllRecipesController = async (req, res) => {
         const { category, difficulty, maxTime, tag, q, sort } = req.query;
         const filter = {};
         if (req.user?.role !== "admin") {
-            filter.status = "published";
+            filter.status = "פורסם";
         }
         if (category) {
             filter.categories = category;

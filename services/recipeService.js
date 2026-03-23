@@ -25,7 +25,7 @@ export const getRecipeByIdService = async (id, isAdmin) => {
     if (!recipe) {
         throw new Error("Recipe not found");
     }
-    if(recipe.status === "draft" && !isAdmin){
+    if(recipe.status === "טיוטה" && !isAdmin){
         throw new Error("Administrator permission required")
     }
     return recipe;
