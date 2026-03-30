@@ -28,6 +28,7 @@ const recipeSchema = new mongoose.Schema(
             "מתוקים",
             "בשרי",
             "חלבי",
+            "דגים",
           ],
         },
       ],
