@@ -13,7 +13,24 @@ const recipeSchema = new mongoose.Schema(
       },
     },
     categories: {
-      type: [String],
+      type: [
+        {
+          type: String,
+          enum: [
+            "ארוחת בוקר",
+            "ארוחת צהריים",
+            "ארוחת ערב",
+            "מרקים",
+            "סלטים",
+            "תוספות",
+            "עיקריות",
+            "מאפים",
+            "מתוקים",
+            "בשרי",
+            "חלבי",
+          ],
+        },
+      ],
       required: true,
       validate: {
         validator: (arr) => arr.length > 0,
@@ -22,7 +39,7 @@ const recipeSchema = new mongoose.Schema(
     },
     prepTimeMinutes: { type: Number, required: true },
     difficulty: { type: String, enum: ["קל", "בינוני", "קשה"] },
-    servings: {type: Number, required: true},
+    servings: { type: Number, required: true },
     ingredients: {
       type: [
         {
