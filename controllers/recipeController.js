@@ -14,7 +14,7 @@ export const getAllRecipesController = async (req, res) => {
     try {
         const { category, difficulty, maxTime, tag, q, sort } = req.query;
         const filter = {};
-        if (req.user?.role !== "admin") {
+        if (req.user?.role !== "מנהל") {
             filter.status = "פורסם";
         }
         if (category) {
@@ -47,7 +47,7 @@ export const getAllRecipesController = async (req, res) => {
 export const getRecipeByIdController = async (req, res) => {
     try {
         let isAdmin;
-        if(req.user?.role === "admin"){
+        if(req.user?.role === "מנהל"){
             isAdmin = true;
         }
         else{

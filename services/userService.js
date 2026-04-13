@@ -64,7 +64,7 @@ export const getMeService = async (userId) => {
 }
 
 export const changeUserRoleService = async (userId, role) => {
-    if (role !== "admin" && role !== "user") {
+    if (role !== "מנהל" && role !== "משתמש") {
         throw new Error("Invalid role")
     }
     const user = await User.findOneAndUpdate({ _id: userId }, { role }, { new: true, runValidators: true }).select("name email role");
