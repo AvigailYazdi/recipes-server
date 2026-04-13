@@ -16,7 +16,7 @@ export const getAllRecipesService = async (filter, sortOption) => {
         "longestPrep": { prepTimeMinutes: -1 },
         "No sort": {}
     };
-    const sortObj = sortMap[sortOption] || {};
+    const sortObj = sortMap[sortOption] || { createdAt: -1 };
     return await Recipe.find(filter).sort(sortObj);
 }
 
