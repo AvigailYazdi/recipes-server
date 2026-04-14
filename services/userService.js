@@ -51,7 +51,7 @@ export const getUserFavoritesService = async (userId) => {
 }
 
 export const getAllUsersService = async () => {
-    const users = await User.find({}).select("name email role");;
+    const users = await User.find({}).select("name email role createdAt");;
     return users;
 }
 
@@ -70,6 +70,14 @@ export const changeUserRoleService = async (userId, role) => {
     const user = await User.findOneAndUpdate({ _id: userId }, { role }, { new: true, runValidators: true }).select("name email role");
     if (!user) {
         throw new Error("User not found");
+    }
+    return user;
+}
+
+export const deleteUserService = async (userId)=>{
+    const user = await User.findByIdAndDelete(userId);
+    if(!user){
+        throw new Error("user not found");
     }
     return user;
 }
