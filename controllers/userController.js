@@ -84,6 +84,6 @@ export const deleteUserController = async (req, res) => {
   } catch (e) {
     res
       .status(400)
-      .json({ message: "Error in changing user's role", error: e.message });
+      .json({ message: "Error in deleting user", error: e.message });
   }
 };
