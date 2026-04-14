@@ -1,5 +1,6 @@
 import {
   changeUserRoleService,
+  deleteUserService,
   getAllUsersService,
   getMeService,
   getUserFavoritesService,

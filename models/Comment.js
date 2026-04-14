@@ -12,6 +12,16 @@ const commentSchema = new mongoose.Schema({
         required: true
     },
     text: { type: String, required: true, minlength: 1, maxlength: 800 },
+    adminReply: {
+      text: {
+        type: String,
+        maxlength: 800,
+      },
+      createdAt: {
+        type: Date,
+      },
+      default: null
+    },
 }, { timestamps: true });
 
 commentSchema.index({ recipeId: 1, createdAt: -1 });// Grouped by recipeId and sorted in descending order by createdAt

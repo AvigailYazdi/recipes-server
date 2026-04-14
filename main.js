@@ -6,7 +6,7 @@ import { verifyToken } from "./middlewares/verifyToken.js";
 import { changeUserRoleController, deleteUserController, getAllUsersController, getMeController, getUserFavoritesController, loginUserController, registerUserController } from "./controllers/userController.js";
 import { addRecipeController, addToFavoriteController, deleteRecipeController, getAllRecipesController, getRecipeByIdController, getRecipeCommentsController, getRecipeRatingController, rateRecipeController, removeFromFavoriteController, updateRecipeController } from "./controllers/recipeController.js";
 import { requireAdmin } from "./middlewares/requireAdmin.js";
-import { addCommentController } from "./controllers/commentController.js";
+import { addAdminReplyController, addCommentController, deleteCommentController, getAllCommentsController } from "./controllers/commentController.js";
 import { optionalAuth } from "./middlewares/optionalAuth.js";
 
 const PORT = process.env.PORT || 3000;
@@ -55,6 +55,12 @@ app.get("/api/recipes/comments/:id", getRecipeCommentsController);
 
 //COMMENTS
 app.post("/api/recipes/comments/:id", verifyToken, addCommentController);
+
+app.get("/api/comments", verifyToken, requireAdmin, getAllCommentsController);
+
+app.patch("/api/comments/:id/reply", verifyToken, requireAdmin, addAdminReplyController);
+
+app.delete("/api/comments/:id", verifyToken, requireAdmin, deleteCommentController);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

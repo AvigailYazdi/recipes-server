@@ -51,7 +51,7 @@ export const getUserFavoritesService = async (userId) => {
 }
 
 export const getAllUsersService = async () => {
-    const users = await User.find({}).select("name email role createdAt");;
+    const users = await User.find({}).select("name email role createdAt");
     return users;
 }
 
