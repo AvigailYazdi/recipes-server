@@ -1,29 +1,34 @@
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema(
+  {
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     recipeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Recipe",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Recipe",
+      required: true,
     },
     text: { type: String, required: true, minlength: 1, maxlength: 800 },
     adminReply: {
-      text: {
-        type: String,
-        maxlength: 800,
+      type: {
+        text: {
+          type: String,
+          maxlength: 800,
+        },
+        createdAt: {
+          type: Date,
+        },
       },
-      createdAt: {
-        type: Date,
-      },
-      default: null
+      default: null,
     },
-}, { timestamps: true });
+  },
+  { timestamps: true },
+);
 
-commentSchema.index({ recipeId: 1, createdAt: -1 });// Grouped by recipeId and sorted in descending order by createdAt
+commentSchema.index({ recipeId: 1, createdAt: -1 }); // Grouped by recipeId and sorted in descending order by createdAt
 
 export const Comment = mongoose.model("Comment", commentSchema);
