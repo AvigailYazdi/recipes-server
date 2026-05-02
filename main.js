@@ -8,12 +8,18 @@ import { addRecipeController, addToFavoriteController, deleteRecipeController, g
 import { requireAdmin } from "./middlewares/requireAdmin.js";
 import { addAdminReplyController, addCommentController, deleteCommentController, getAllCommentsController } from "./controllers/commentController.js";
 import { optionalAuth } from "./middlewares/optionalAuth.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("client/dist"));
 
 await connectDB(process.env.MONGO_URI);
 
@@ -65,6 +71,13 @@ app.get("/api/comments", verifyToken, requireAdmin, getAllCommentsController);
 app.patch("/api/comments/reply/:id", verifyToken, requireAdmin, addAdminReplyController);
 
 app.delete("/api/comments/:id", verifyToken, requireAdmin, deleteCommentController);
+
+
+//
+app.get(/.*/, (req, res) => { 
+  console.log(__dirname);
+  res.sendFile(__dirname + "/client/dist/index.html");
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
