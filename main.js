@@ -4,7 +4,7 @@ import cors from "cors";
 import { connectDB } from "./DB/db.js";
 import { verifyToken } from "./middlewares/verifyToken.js";
 import { changeUserRoleController, deleteUserController, getAllUsersController, getMeController, getUserFavoritesController, loginUserController, registerUserController } from "./controllers/userController.js";
-import { addRecipeController, addToFavoriteController, deleteRecipeController, getAllRecipesController, getRecipeByIdController, getRecipeCommentsController, getRecipeRatingController, rateRecipeController, removeFromFavoriteController, updateRecipeController } from "./controllers/recipeController.js";
+import { addRecipeController, addToFavoriteController, deleteRecipeController, getAllRecipesController, getMaxPrepTimeController, getMyRecipeRatingController, getRecipeByIdController, getRecipeCommentsController, getRecipeRatingController, rateRecipeController, removeFromFavoriteController, updateRecipeController } from "./controllers/recipeController.js";
 import { requireAdmin } from "./middlewares/requireAdmin.js";
 import { addAdminReplyController, addCommentController, deleteCommentController, getAllCommentsController } from "./controllers/commentController.js";
 import { optionalAuth } from "./middlewares/optionalAuth.js";
@@ -41,6 +41,8 @@ app.put("/api/recipes/:id", verifyToken, requireAdmin, updateRecipeController);
 
 app.get("/api/recipes", optionalAuth, getAllRecipesController);
 
+app.get("/api/recipes/max-prep-time", getMaxPrepTimeController);
+
 app.get("/api/recipes/:id", optionalAuth, getRecipeByIdController)
 
 app.post("/api/recipes/favorite/:id", verifyToken, addToFavoriteController);
@@ -51,6 +53,8 @@ app.post("/api/recipes/rating/:id", verifyToken, rateRecipeController);
 
 app.get("/api/recipes/rating/:id", getRecipeRatingController);
 
+app.get("/api/recipes/my-rating/:id", verifyToken, getMyRecipeRatingController);
+
 app.get("/api/recipes/comments/:id", getRecipeCommentsController);
 
 //COMMENTS
@@ -58,7 +62,7 @@ app.post("/api/recipes/comments/:id", verifyToken, addCommentController);
 
 app.get("/api/comments", verifyToken, requireAdmin, getAllCommentsController);
 
-app.patch("/api/comments/:id/reply", verifyToken, requireAdmin, addAdminReplyController);
+app.patch("/api/comments/reply/:id", verifyToken, requireAdmin, addAdminReplyController);
 
 app.delete("/api/comments/:id", verifyToken, requireAdmin, deleteCommentController);
 
